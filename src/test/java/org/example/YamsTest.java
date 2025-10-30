@@ -19,7 +19,7 @@ class YamsTest {
     @Test
     void testYamsthreeequal() {
         int[][] throwsArray = {
-                {6, 6, 6, 9, 8}
+                {6, 6, 6, 0, 1}
         };
         int[] expected = {28};
         assertArrayEquals(expected, Yams.scoreAll(throwsArray));
@@ -28,7 +28,7 @@ class YamsTest {
     @Test
     void testYamsfourqual() {
         int[][] throwsArray = {
-                {6, 6, 6, 6, 8}
+                {6, 6, 6, 6, 1}
         };
         int[] expected = {35};
         assertArrayEquals(expected, Yams.scoreAll(throwsArray));

@@ -12,34 +12,21 @@ public class Yams {
 
     public static int score(int[] dice) {
 
-        //5 equals
-        if (dice[0] == dice[1] &&
-                dice[1] == dice[2] &&
-                dice[2] == dice[3] &&
-                dice[3] == dice[4]) {
-            return 50;
+        int[] counts = new int[7];
+        for (int die : dice) {
+            counts[die]++;
         }
 
-        //four equals
-        if ((dice[0] == dice[1] && dice[1] == dice[2] && dice[2] == dice[3]) ||
-                (dice[1] == dice[2] && dice[2] == dice[3] && dice[3] == dice[4]) ||
-                (dice[0] == dice[1] && dice[1] == dice[2] && dice[2] == dice[4]) ||
-                (dice[0] == dice[1] && dice[1] == dice[3] && dice[3] == dice[4]) ||
-                (dice[0] == dice[2] && dice[2] == dice[3] && dice[3] == dice[4])) {
-            return 35;
+        for (int count : counts) {
+            if (count == 5) return 50; // YAMS
         }
 
+        for (int count : counts) {
+            if (count == 4) return 35; // Carré
+        }
 
-        //three equals
-        if ((dice[0] == dice[1] && dice[1] == dice[2]) ||
-                (dice[1] == dice[2] && dice[2] == dice[3]) ||
-                (dice[2] == dice[3] && dice[3] == dice[4]) ||
-                (dice[0] == dice[2] && dice[2] == dice[3]) ||
-                (dice[0] == dice[3] && dice[3] == dice[4]) ||
-                (dice[0] == dice[1] && dice[1] == dice[4]) ||
-                (dice[1] == dice[3] && dice[3] == dice[4]) ||
-                (dice[0] == dice[2] && dice[2] == dice[4])) {
-            return 28;
+        for (int count : counts) {
+            if (count == 3) return 28; // Brelan
         }
 
         return 0;

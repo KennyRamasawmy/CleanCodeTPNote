@@ -25,6 +25,15 @@ class YamsTest {
         assertArrayEquals(expected, Yams.scoreAll(throwsArray));
     }
 
+    @Test
+    void testYamsfourqual() {
+        int[][] throwsArray = {
+                {6, 6, 6, 6, 8}
+        };
+        int[] expected = {35};
+        assertArrayEquals(expected, Yams.scoreAll(throwsArray));
+    }
+
 
 
 

@@ -22,29 +22,21 @@ public class Yams {
 
         int score = 0;
 
-        // YAMS
-        for (int count : counts) {
-            if (count == 5) score = Math.max(score, 50);
-        }
-
-        // Carré
-        for (int count : counts) {
-            if (count == 4) score = Math.max(score, 35);
-        }
-
-        // Full (3 + 2)
         boolean hasThree = false;
         boolean hasTwo = false;
-        for (int count : counts) {
-            if (count == 3) hasThree = true;
-            if (count == 2) hasTwo = true;
-        }
-        if (hasThree && hasTwo) score = Math.max(score, 30);
 
-        // Brelan
         for (int count : counts) {
-            if (count == 3) score = Math.max(score, 28);
+            if (count == 5) score = Math.max(score, 50); // YAMS
+            else if (count == 4) score = Math.max(score, 35); // Carré
+            else if (count == 3) {
+                hasThree = true;
+                score = Math.max(score, 28); // Brelan
+            } else if (count == 2) {
+                hasTwo = true;
+            }
         }
+        if (hasThree && hasTwo) score = Math.max(score, 30); // Full
+
 
         // Grande suite
         int[] sorted = dice.clone();

@@ -14,8 +14,8 @@ public class Main {
 //            IO.println("i = " + i);
 //        }
 
-        cal newcal = new cal();
-
-        System.out.println(newcal.addition(1,2));
+//        cal newcal = new cal();
+//
+//        System.out.println(newcal.addition(1,2));
     }
 }

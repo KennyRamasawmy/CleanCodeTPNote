@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Arrays;
+
 public class Yams {
 
     public static int[] scoreAll(int[][] throwsList) {
@@ -28,6 +30,15 @@ public class Yams {
 
         if (hasThree && hasTwo) return 30;
 
+
+        int[] sorted = dice.clone();
+        Arrays.sort(sorted);
+
+        boolean isSmallStraight = Arrays.equals(sorted, new int[]{1, 2, 3, 4, 5});
+        boolean isLargeStraight = Arrays.equals(sorted, new int[]{2, 3, 4, 5, 6});
+
+        if (isSmallStraight || isLargeStraight) return 40;
+
         for (int count : counts) {
             if (count == 5) return 50; // YAMS
         }
@@ -40,8 +51,10 @@ public class Yams {
             if (count == 3) return 28; // Brelan
         }
 
-
-
-        return 0;
+        int sum = 0;
+        for (int die : dice) {
+            sum += die;
+        }
+        return sum;
     }
 }

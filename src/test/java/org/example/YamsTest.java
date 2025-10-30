@@ -45,4 +45,23 @@ class YamsTest {
     }
 
 
+    @Test
+    void testGrandeSuite() {
+        int[][] throwsArray = {
+                {2, 3, 4, 5, 6}
+        };
+        int[] expected = {40};
+        assertArrayEquals(expected, Yams.scoreAll(throwsArray));
+    }
+
+
+    @Test
+    void testChance() {
+        int[][] throwsArray = {
+                {1, 2, 3, 4, 6}
+        };
+        int[] expected = {16}; // Somme des dés
+        assertArrayEquals(expected, Yams.scoreAll(throwsArray));
+    }
+
 }

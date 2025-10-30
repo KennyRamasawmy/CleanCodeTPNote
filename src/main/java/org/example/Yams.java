@@ -11,6 +11,8 @@ public class Yams {
     }
 
     public static int score(int[] dice) {
+
+        //5 equals
         if (dice[0] == dice[1] &&
                 dice[1] == dice[2] &&
                 dice[2] == dice[3] &&
@@ -18,6 +20,17 @@ public class Yams {
             return 50;
         }
 
+        //four equals
+        if ((dice[0] == dice[1] && dice[1] == dice[2] && dice[2] == dice[3]) ||
+                (dice[1] == dice[2] && dice[2] == dice[3] && dice[3] == dice[4]) ||
+                (dice[0] == dice[1] && dice[1] == dice[2] && dice[2] == dice[4]) ||
+                (dice[0] == dice[1] && dice[1] == dice[3] && dice[3] == dice[4]) ||
+                (dice[0] == dice[2] && dice[2] == dice[3] && dice[3] == dice[4])) {
+            return 35;
+        }
+
+
+        //three equals
         if ((dice[0] == dice[1] && dice[1] == dice[2]) ||
                 (dice[1] == dice[2] && dice[2] == dice[3]) ||
                 (dice[2] == dice[3] && dice[3] == dice[4]) ||

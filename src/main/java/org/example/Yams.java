@@ -2,13 +2,31 @@ package org.example;
 
 public class Yams {
 
-    public static int score(int[] dice) {
+    public static int[] scoreAll(int[][] throwsList) {
+        int[] scores = new int[throwsList.length];
+        for (int i = 0; i < throwsList.length; i++) {
+            scores[i] = score(throwsList[i]);
+        }
+        return scores;
+    }
 
+    public static int score(int[] dice) {
         if (dice[0] == dice[1] &&
                 dice[1] == dice[2] &&
                 dice[2] == dice[3] &&
                 dice[3] == dice[4]) {
             return 50;
+        }
+
+        if ((dice[0] == dice[1] && dice[1] == dice[2]) ||
+                (dice[1] == dice[2] && dice[2] == dice[3]) ||
+                (dice[2] == dice[3] && dice[3] == dice[4]) ||
+                (dice[0] == dice[2] && dice[2] == dice[3]) ||
+                (dice[0] == dice[3] && dice[3] == dice[4]) ||
+                (dice[0] == dice[1] && dice[1] == dice[4]) ||
+                (dice[1] == dice[3] && dice[3] == dice[4]) ||
+                (dice[0] == dice[2] && dice[2] == dice[4])) {
+            return 28;
         }
 
         return 0;

@@ -17,6 +17,17 @@ public class Yams {
             counts[die]++;
         }
 
+
+        boolean hasThree = false;
+        boolean hasTwo = false;
+
+        for (int count : counts) {
+            if (count == 3) hasThree = true;
+            if (count == 2) hasTwo = true;
+        }
+
+        if (hasThree && hasTwo) return 30;
+
         for (int count : counts) {
             if (count == 5) return 50; // YAMS
         }
@@ -28,6 +39,8 @@ public class Yams {
         for (int count : counts) {
             if (count == 3) return 28; // Brelan
         }
+
+
 
         return 0;
     }

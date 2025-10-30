@@ -35,6 +35,14 @@ class YamsTest {
     }
 
 
+    @Test
+    void testFull() {
+        int[][] throwsArray = {
+                {2, 2, 2, 5, 5}
+        };
+        int[] expected = {30};
+        assertArrayEquals(expected, Yams.scoreAll(throwsArray));
+    }
 
 
 }

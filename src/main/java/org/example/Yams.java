@@ -1,30 +1,57 @@
 package org.example;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class Yams {
 
+    private static final Map<String, Integer> FIGURE_SCORES = Map.of(
+            "YAMS", 50,
+            "Carré", 35,
+            "Full", 30,
+            "Brelan", 28,
+            "Grande suite", 40
+            // Chance est géré à part
+    );
+
     public static int[] scoreAll(int[][] allThrows) {
         int[] scores = new int[allThrows.length];
+        Set<String> usedFigures = new HashSet<>();
+
         for (int i = 0; i < allThrows.length; i++) {
-            scores[i] = score(allThrows[i]);
+            String figure = selectFigure(allThrows[i], usedFigures);
+            usedFigures.add(figure);
+            scores[i] = getScoreForFigure(figure, allThrows[i]);
         }
+
         return scores;
     }
 
-    public static int score(int[] dice) {
+    private static String selectFigure(int[] dice, Set<String> usedFigures) {
         validateDice(dice);
         int[] counts = countDiceValues(dice);
-        int score = 0;
+        Map<String, Integer> candidates = new HashMap<>();
 
-        score = Math.max(score, scoreYams(counts));
-        score = Math.max(score, scoreCarre(counts));
-        score = Math.max(score, scoreFull(counts));
-        score = Math.max(score, scoreBrelan(counts));
-        score = Math.max(score, scoreGrandeSuite(dice));
-        score = Math.max(score, scoreChance(dice));
+        if (!usedFigures.contains("YAMS") && scoreYams(counts)) candidates.put("YAMS", FIGURE_SCORES.get("YAMS"));
+        if (!usedFigures.contains("Carré") && scoreCarre(counts)) candidates.put("Carré", FIGURE_SCORES.get("Carré"));
+        if (!usedFigures.contains("Full") && scoreFull(counts)) candidates.put("Full", FIGURE_SCORES.get("Full"));
+        if (!usedFigures.contains("Brelan") && scoreBrelan(counts)) candidates.put("Brelan", FIGURE_SCORES.get("Brelan"));
+        if (!usedFigures.contains("Grande suite") && scoreGrandeSuite(dice)) candidates.put("Grande suite", FIGURE_SCORES.get("Grande suite"));
 
-        return score;
+        if (candidates.isEmpty()) return "Chance";
+
+        return Collections.max(candidates.entrySet(), Map.Entry.comparingByValue()).getKey();
+    }
+
+    private static int getScoreForFigure(String figure, int[] dice) {
+        switch (figure) {
+            case "YAMS": return 50;
+            case "Carré": return 35;
+            case "Full": return 30;
+            case "Brelan": return 28;
+            case "Grande suite": return 40;
+            case "Chance": return scoreChance(dice);
+            default: throw new IllegalArgumentException("Figure inconnue : " + figure);
+        }
     }
 
     private static void validateDice(int[] dice) {
@@ -36,56 +63,52 @@ public class Yams {
     }
 
     private static int[] countDiceValues(int[] dice) {
-        int[] counts = new int[7]; // index 1 to 6
+        int[] counts = new int[7]; // index 1 à 6
         for (int die : dice) {
             counts[die]++;
         }
         return counts;
     }
 
-    private static int scoreYams(int[] counts) {
+    private static boolean scoreYams(int[] counts) {
         for (int count : counts) {
-            if (count == 5) return 50;
+            if (count == 5) return true;
         }
-        return 0;
+        return false;
     }
 
-    private static int scoreCarre(int[] counts) {
+    private static boolean scoreCarre(int[] counts) {
         for (int count : counts) {
-            if (count == 4) return 35;
+            if (count == 4) return true;
         }
-        return 0;
+        return false;
     }
 
-    private static int scoreBrelan(int[] counts) {
+    private static boolean scoreBrelan(int[] counts) {
         for (int count : counts) {
-            if (count == 3) return 28;
+            if (count == 3) return true;
         }
-        return 0;
+        return false;
     }
 
-    private static int scoreFull(int[] counts) {
+    private static boolean scoreFull(int[] counts) {
         boolean hasThree = false;
         boolean hasTwo = false;
         for (int count : counts) {
             if (count == 3) hasThree = true;
             if (count == 2) hasTwo = true;
         }
-        return (hasThree && hasTwo) ? 30 : 0;
+        return hasThree && hasTwo;
     }
 
-    private static int scoreGrandeSuite(int[] dice) {
+    private static boolean scoreGrandeSuite(int[] dice) {
         int[] sorted = dice.clone();
         Arrays.sort(sorted);
-        if (Arrays.equals(sorted, new int[]{1, 2, 3, 4, 5}) ||
-                Arrays.equals(sorted, new int[]{2, 3, 4, 5, 6})) {
-            return 40;
-        }
-        return 0;
+        return Arrays.equals(sorted, new int[]{1, 2, 3, 4, 5}) ||
+                Arrays.equals(sorted, new int[]{2, 3, 4, 5, 6});
     }
 
     private static int scoreChance(int[] dice) {
         return Arrays.stream(dice).sum();
     }
 }
-

@@ -73,10 +73,6 @@ class YamsTest {
                 {2, 2, 2, 5, 5},     // Full → 30
                 {2, 3, 4, 5, 6},     // Grande suite → 40
                 {1, 2, 3, 4, 6},     // Chance → 16
-                {2, 2, 2, 2, 2},     // YAMS → 50
-                {1, 1, 1, 1, 2},     // Carré → 35
-                {5, 5, 5, 2, 2},     // Full → 30
-                {1, 2, 3, 4, 5}      // Grande suite → 40
         };
 
         int[] expected = {
@@ -86,10 +82,6 @@ class YamsTest {
                 30, // Full
                 40, // Grande suite
                 16, // Chance
-                50, // YAMS
-                35, // Carré
-                30, // Full
-                40  // Grande suite
         };
 
         assertArrayEquals(expected, Yams.scoreAll(throwsArray));
@@ -105,6 +97,17 @@ class YamsTest {
             Yams.scoreAll(throwsArray);
         });
     }
+
+    @Test
+    void testSecondThrowAvoidsUsedFigure() {
+        int[][] throwsArray = {
+                {6, 6, 6, 6, 6}, // YAMS → 50
+                {6, 6, 6, 6, 6}  // Carré → 35 (YAMS déjà utilisé)
+        };
+        int[] expected = {50, 35};
+        assertArrayEquals(expected, Yams.scoreAll(throwsArray));
+    }
+
 
 
 }
